@@ -14,9 +14,9 @@ public class TelefonoDTO {
     
     private String numero;
     private String operador;
-    private PersonaDTO duenio;
+    private long duenio;
 
-    public TelefonoDTO(String numero, String operador, PersonaDTO duenio) {
+    public TelefonoDTO(String numero, String operador, Long duenio) {
         this.numero = numero;
         this.operador = operador;
         this.duenio = duenio;
@@ -38,11 +38,12 @@ public class TelefonoDTO {
         this.operador = operador;
     }
 
-    public PersonaDTO getDuenio() {
+    public Long getDuenio() {
+
         return duenio;
     }
 
-    public void setDuenio(PersonaDTO duenio) {
+    public void setDuenio(Long duenio) {
         this.duenio = duenio;
     }
 

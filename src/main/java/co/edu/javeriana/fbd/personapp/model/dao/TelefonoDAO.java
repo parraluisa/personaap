@@ -19,7 +19,7 @@ public interface TelefonoDAO {
     
     public Boolean delete(String numero);
     
-    public TelefonoDTO findById(String numero);
+    public TelefonoDTO findByNum(String numero);
     
     public List<TelefonoDTO> findByDuenio(Long cedulaDuenio);
     

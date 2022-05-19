@@ -14,10 +14,11 @@ import co.edu.javeriana.fbd.personapp.model.dto.PersonaDTO;
  */
 public class Principal {
     public static void main(String[] args) {
-        PersonaDTO p1 = new PersonaDTO((long) 1234, "Luis", "Peña", (short) 17, 'M');
+        PersonaDTO p1 = new PersonaDTO((long) 2540, "Ana", "Lopez", (short) 20, 'O');
         System.out.println("p1: "+p1);
         PersonaDAO pdao = new PersonaDAOImpl();
-        PersonaDTO p2 = pdao.findById((long) 1234);
+        PersonaDTO p2 = pdao.create(p1);
         System.out.println("p2: "+p2);
+        PersonaDTO p3 =pdao.findById((long)2540);
     }
 }

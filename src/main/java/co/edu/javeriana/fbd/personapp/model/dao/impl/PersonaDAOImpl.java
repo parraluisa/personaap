@@ -7,6 +7,7 @@ import co.edu.javeriana.fbd.personapp.util.MySQL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -53,12 +54,54 @@ public class PersonaDAOImpl implements PersonaDAO {
 
     @Override
     public PersonaDTO edit(Long cedula, PersonaDTO persona) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try {
+            this.mysql.conectar();
+            String query = "update persona set"
+                    +"cedula ="+ "'" + persona.getCedula() + "',"
+                    +"nombre ="+ "'" + persona.getNombre() + "',"
+                    +"apellido ="+ "'" + persona.getApellido() + "',"
+                    +"edad ="+ "'" + persona.getEdad() + "',"
+                    +"genero ="+ "'" + persona.getGenero() + "' where cedula ='"+cedula+"';";
+            System.out.println(query);
+            Statement stmt = this.mysql.getConnection().createStatement();
+            int code = stmt.executeUpdate(query);
+            stmt.close();
+            this.mysql.desconectar();
+            switch (code) {
+                case 1:
+                    System.out.println("Se actualizo la persona");
+                    return findById(persona.getCedula());
+                default:
+                    return null;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PersonaDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
     }
 
     @Override
     public Boolean delete(Long cedula) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try {
+            this.mysql.conectar();
+            String query = "DELETE FROM persona WHERE cedula='"
+                    + cedula + "';";
+            System.out.println(query);
+            Statement stmt = this.mysql.getConnection().createStatement();
+            int code = stmt.executeUpdate(query);
+            stmt.close();
+            this.mysql.desconectar();
+            switch (code) {
+                case 1:
+                    System.out.println("Se eliminó la persona");
+                    return true;
+                default:
+                    return null;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PersonaDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
     }
 
     @Override
@@ -92,12 +135,56 @@ public class PersonaDAOImpl implements PersonaDAO {
 
     @Override
     public List<PersonaDTO> findAll() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        List<PersonaDTO> personasList=new ArrayList<PersonaDTO>();
+        try {
+            this.mysql.conectar();
+            String query = "SELECT * FROM persona;";
+            System.out.println(query);
+            Statement stmt = this.mysql.getConnection().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            ResultSet rs = stmt.executeQuery(query);
+            if (rs.first()){
+                while (rs.next()) {
+                    PersonaDTO persona = new PersonaDTO(
+                            rs.getLong("cedula"),
+                            rs.getString("nombre"),
+                            rs.getString("apellido"),
+                            rs.getShort("edad"),
+                            rs.getString("genero").charAt(0));
+                    personasList.add(persona);
+                }
+                rs.close();
+                stmt.close();
+                return personasList;
+            }
+            else {
+                rs.close();
+                stmt.close();
+                return null;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PersonaDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
     }
 
     @Override
     public Integer count() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try {
+            this.mysql.conectar();
+            String query = "SELECT COUNT(*) FROM persona;";
+            System.out.println(query);
+            Statement stmt = this.mysql.getConnection().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            ResultSet rs = stmt.executeQuery(query);
+            rs.next();
+           int num=rs.getInt("count(*)");
+                rs.close();
+                stmt.close();
+                return num;
+
+        } catch (SQLException ex) {
+            Logger.getLogger(PersonaDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
     }
 
 }

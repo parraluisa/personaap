@@ -1,15 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package co.edu.javeriana.fbd.personapp.model.dto;
 
 import java.util.Objects;
 
-/**
- *
- * @author aasanchez
- */
 public class PersonaDTO {
     private Long cedula;
     private String nombre;

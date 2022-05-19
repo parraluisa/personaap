@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package co.edu.javeriana.fbd.personapp.model.dao.impl;
 
 import co.edu.javeriana.fbd.personapp.model.dao.TelefonoDAO;
@@ -17,10 +14,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author aasanchez
- */
 public class TelefonoDAOImpl implements TelefonoDAO{
 
     private final MySQL mysql;

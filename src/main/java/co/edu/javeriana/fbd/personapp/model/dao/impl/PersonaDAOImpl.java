@@ -12,10 +12,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author aasanchez
- */
 public class PersonaDAOImpl implements PersonaDAO {
 
     private final MySQL mysql;
@@ -56,11 +52,11 @@ public class PersonaDAOImpl implements PersonaDAO {
     public PersonaDTO edit(Long cedula, PersonaDTO persona) {
         try {
             this.mysql.conectar();
-            String query = "update persona set"
-                    +"cedula ="+ "'" + persona.getCedula() + "',"
-                    +"nombre ="+ "'" + persona.getNombre() + "',"
+            String query = "update persona set "
+                    +"cedula ="+ persona.getCedula()+","
+                    +" nombre ="+ "'" + persona.getNombre() + "',"
                     +"apellido ="+ "'" + persona.getApellido() + "',"
-                    +"edad ="+ "'" + persona.getEdad() + "',"
+                    +"edad =" + persona.getEdad()+","
                     +"genero ="+ "'" + persona.getGenero() + "' where cedula ='"+cedula+"';";
             System.out.println(query);
             Statement stmt = this.mysql.getConnection().createStatement();

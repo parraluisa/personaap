@@ -4,10 +4,6 @@ package co.edu.javeriana.fbd.personapp.model.dao;
 import co.edu.javeriana.fbd.personapp.model.dto.PersonaDTO;
 import java.util.List;
 
-/**
- *
- * @author aasanchez
- */
 public interface PersonaDAO {
     
     public PersonaDTO create(PersonaDTO persona);

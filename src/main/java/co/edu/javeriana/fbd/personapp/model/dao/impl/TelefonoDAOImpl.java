@@ -1,6 +1,7 @@
 
 package co.edu.javeriana.fbd.personapp.model.dao.impl;
 
+import co.edu.javeriana.fbd.personapp.model.dao.PersonaDAO;
 import co.edu.javeriana.fbd.personapp.model.dao.TelefonoDAO;
 import co.edu.javeriana.fbd.personapp.model.dto.PersonaDTO;
 import co.edu.javeriana.fbd.personapp.model.dto.TelefonoDTO;
@@ -14,7 +15,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class TelefonoDAOImpl implements TelefonoDAO{
+public class TelefonoDAOImpl extends PersonaDAOImpl implements TelefonoDAO {
 
     private final MySQL mysql;
 
@@ -31,7 +32,7 @@ public class TelefonoDAOImpl implements TelefonoDAO{
             String query = "INSERT INTO telefono(numero,operador,duenio) VALUES("
                     + "'" + telefono.getNumero() + "',"
                     + "'" + telefono.getOperador() + "',"
-                    + "'" + telefono.getDuenio() + "');";
+                    + "'" + telefono.getDuenio().getCedula() + "');";
             System.out.println(query);
             Statement stmt = this.mysql.getConnection().createStatement();
             int code = stmt.executeUpdate(query);
@@ -57,7 +58,7 @@ public class TelefonoDAOImpl implements TelefonoDAO{
             String query = "update telefono set"
                     +"Numero ="+ "'" + telefono.getNumero() + "',"
                     +"operador ="+ "'" + telefono.getOperador()+ "',"
-                    +"duenio ="+ "'" + telefono.getDuenio() + "' where numero ='"+numero+"';";
+                    +"duenio ="+ "'" + telefono.getDuenio().getCedula() + "' where numero ='"+numero+"';";
             System.out.println(query);
             Statement stmt = this.mysql.getConnection().createStatement();
             int code = stmt.executeUpdate(query);
@@ -109,10 +110,11 @@ public class TelefonoDAOImpl implements TelefonoDAO{
             Statement stmt = this.mysql.getConnection().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
             ResultSet rs = stmt.executeQuery(query);
             if (rs.first()) {
+                PersonaDTO per=this.findById(rs.getLong("duenio"));
                 TelefonoDTO telefono = new TelefonoDTO(
                         rs.getString("numero"),
                         rs.getString("operador"),
-                        rs.getLong("duenio"));
+                        per);
                 rs.close();
                 stmt.close();
                 return telefono;
@@ -138,14 +140,16 @@ public class TelefonoDAOImpl implements TelefonoDAO{
             ResultSet rs = stmt.executeQuery(query);
             if (rs.first()) {
                 while (rs.next()) {
+                    PersonaDTO per=this.findById(rs.getLong("duenio"));
                     TelefonoDTO telefono = new TelefonoDTO(
                             rs.getString("numero"),
                             rs.getString("operador"),
-                            rs.getLong("duenio"));
+                            per);
                     telefonosLista.add(telefono);
                 }
                 rs.close();
                 stmt.close();
+                return telefonosLista;
             } else {
                 rs.close();
                 stmt.close();
@@ -156,11 +160,11 @@ public class TelefonoDAOImpl implements TelefonoDAO{
             return null;
         }
 
-        return telefonosLista;
+
     }
 
     @Override
-    public List<TelefonoDTO> findAll() {
+    public List<TelefonoDTO> findAlli() {
         List<TelefonoDTO> telefonos=new ArrayList<TelefonoDTO>();
         try {
             this.mysql.conectar();
@@ -170,10 +174,11 @@ public class TelefonoDAOImpl implements TelefonoDAO{
             ResultSet rs = stmt.executeQuery(query);
             if (rs.first()){
                 while (rs.next()) {
+                    PersonaDTO perso=this.findById(rs.getLong("duenio"));
                     TelefonoDTO telefono = new TelefonoDTO(
                             rs.getString("numero"),
                             rs.getString("operador"),
-                            rs.getLong("duenio"));
+                            perso);
                     telefonos.add(telefono);
                 }
                 rs.close();
@@ -189,6 +194,7 @@ public class TelefonoDAOImpl implements TelefonoDAO{
             Logger.getLogger(PersonaDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
+
     }
 
     @Override

@@ -1,6 +1,7 @@
 
 package co.edu.javeriana.fbd.personapp.model.dao;
 
+import co.edu.javeriana.fbd.personapp.model.dto.PersonaDTO;
 import co.edu.javeriana.fbd.personapp.model.dto.TelefonoDTO;
 import java.util.List;
 
@@ -16,7 +17,7 @@ public interface TelefonoDAO {
     
     public List<TelefonoDTO> findByDuenio(Long cedulaDuenio);
     
-    public List<TelefonoDTO> findAll();
+    public List<TelefonoDTO> findAlli();
     
     public Integer count();
     

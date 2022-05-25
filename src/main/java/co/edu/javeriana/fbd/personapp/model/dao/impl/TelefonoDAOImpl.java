@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class TelefonoDAOImpl extends PersonaDAOImpl implements TelefonoDAO {
+public class TelefonoDAOImpl implements TelefonoDAO {
 
     private final MySQL mysql;
 
@@ -109,8 +109,9 @@ public class TelefonoDAOImpl extends PersonaDAOImpl implements TelefonoDAO {
             System.out.println(query);
             Statement stmt = this.mysql.getConnection().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
             ResultSet rs = stmt.executeQuery(query);
+            PersonaDAO pDAO =new PersonaDAOImpl();
             if (rs.first()) {
-                PersonaDTO per=this.findById(rs.getLong("duenio"));
+                PersonaDTO per=pDAO.findById(rs.getLong("duenio"));
                 TelefonoDTO telefono = new TelefonoDTO(
                         rs.getString("numero"),
                         rs.getString("operador"),
@@ -138,9 +139,10 @@ public class TelefonoDAOImpl extends PersonaDAOImpl implements TelefonoDAO {
             System.out.println(query);
             Statement stmt = this.mysql.getConnection().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
             ResultSet rs = stmt.executeQuery(query);
+            PersonaDAO pDAO =new PersonaDAOImpl();
             if (rs.first()) {
                 while (rs.next()) {
-                    PersonaDTO per=this.findById(rs.getLong("duenio"));
+                    PersonaDTO per=pDAO.findById(rs.getLong("duenio"));
                     TelefonoDTO telefono = new TelefonoDTO(
                             rs.getString("numero"),
                             rs.getString("operador"),
@@ -164,7 +166,7 @@ public class TelefonoDAOImpl extends PersonaDAOImpl implements TelefonoDAO {
     }
 
     @Override
-    public List<TelefonoDTO> findAlli() {
+    public List<TelefonoDTO> findAll() {
         List<TelefonoDTO> telefonos=new ArrayList<TelefonoDTO>();
         try {
             this.mysql.conectar();
@@ -173,8 +175,9 @@ public class TelefonoDAOImpl extends PersonaDAOImpl implements TelefonoDAO {
             Statement stmt = this.mysql.getConnection().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
             ResultSet rs = stmt.executeQuery(query);
             if (rs.first()){
+                PersonaDAO pDAO =new PersonaDAOImpl();
                 while (rs.next()) {
-                    PersonaDTO perso=this.findById(rs.getLong("duenio"));
+                    PersonaDTO perso=pDAO.findById(rs.getLong("duenio"));
                     TelefonoDTO telefono = new TelefonoDTO(
                             rs.getString("numero"),
                             rs.getString("operador"),

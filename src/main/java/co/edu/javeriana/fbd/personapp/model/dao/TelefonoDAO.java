@@ -17,7 +17,7 @@ public interface TelefonoDAO {
     
     public List<TelefonoDTO> findByDuenio(Long cedulaDuenio);
     
-    public List<TelefonoDTO> findAlli();
+    public List<TelefonoDTO> findAll();
     
     public Integer count();
     
